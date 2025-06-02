@@ -241,8 +241,28 @@ export const generator = {
           y: -100,
         },
       },
+      prompt: "You need to speak first and be conversational.",
+      model: {
+        model: "gpt-4o",
+        provider: "openai",
+        maxTokens: 1000,
+        temperature: 0.7,
+      },
+      messagePlan: {
+        firstMessage: "Hello! I’m John, your AI interview assistant for today!",
+      },
+    },
+    {
+      name: "conversation_1748894205142",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: -400,
+          y: 150,
+        },
+      },
       prompt:
-        "Hello {{username}}, Let's prepare your interview. I will ask you few questions and generate your interview. Are you ready?",
+        'Say "Hello {{username}}, Let\'s prepare your interview. I will ask you few questions and generate your interview. Are you ready?"',
       model: {
         model: "gpt-4o",
         provider: "openai",
@@ -254,12 +274,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748865765527",
+      name: "conversation_1748894221281",
       type: "conversation",
       metadata: {
         position: {
           x: -400,
-          y: 150,
+          y: 400,
         },
       },
       prompt: "What role would you like to train for? ",
@@ -284,12 +304,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748865851101",
+      name: "conversation_1748894253816",
       type: "conversation",
       metadata: {
         position: {
           x: -400,
-          y: 400,
+          y: 650,
         },
       },
       prompt: "What type of the interview should it be?",
@@ -302,7 +322,7 @@ export const generator = {
       variableExtractionPlan: {
         output: [
           {
-            enum: ["technical", "behavioral"],
+            enum: ["technical", "behavioral", "mixed"],
             type: "string",
             title: "type",
             description: "",
@@ -314,12 +334,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748865928260",
+      name: "conversation_1748894304354",
       type: "conversation",
       metadata: {
         position: {
           x: -400,
-          y: 650,
+          y: 900,
         },
       },
       prompt: "What job experience level?",
@@ -344,12 +364,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748866273306",
+      name: "conversation_1748894349421",
       type: "conversation",
       metadata: {
         position: {
           x: -400,
-          y: 900,
+          y: 1150,
         },
       },
       prompt: "What techstack should we cover?",
@@ -374,12 +394,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748866308253",
+      name: "conversation_1748894383836",
       type: "conversation",
       metadata: {
         position: {
-          x: -400,
-          y: 1150,
+          x: -401.1607340843948,
+          y: 1400,
         },
       },
       prompt: "How many questions would you like me to prepare?",
@@ -408,8 +428,8 @@ export const generator = {
       type: "tool",
       metadata: {
         position: {
-          x: -400,
-          y: 1400,
+          x: -401.1607340843948,
+          y: 1650,
         },
       },
       tool: {
@@ -440,7 +460,7 @@ export const generator = {
             },
             userid: {
               type: "string",
-              value: "",
+              value: "{{ userid }}",
               description: "",
             },
             techstack: {
@@ -450,7 +470,6 @@ export const generator = {
             },
           },
         },
-        name: "API",
         type: "apiRequest",
         method: "POST",
         function: {
@@ -464,12 +483,12 @@ export const generator = {
       },
     },
     {
-      name: "conversation_1748866584301",
+      name: "conversation_1748894499497",
       type: "conversation",
       metadata: {
         position: {
-          x: -400,
-          y: 1650,
+          x: -401.1607340843948,
+          y: 1900,
         },
       },
       prompt:
@@ -485,12 +504,12 @@ export const generator = {
       },
     },
     {
-      name: "hangup_1748866666324",
+      name: "hangup_1748894519393",
       type: "tool",
       metadata: {
         position: {
-          x: -394.20785017049576,
-          y: 1911.4357352266986,
+          x: -397.1607340843948,
+          y: 2256.6666666666665,
         },
       },
       tool: {
@@ -501,23 +520,31 @@ export const generator = {
   edges: [
     {
       from: "introduction",
-      to: "conversation_1748865765527",
+      to: "conversation_1748894205142",
+      condition: {
+        type: "ai",
+        prompt: "If the user said Hello",
+      },
+    },
+    {
+      from: "conversation_1748894205142",
+      to: "conversation_1748894221281",
       condition: {
         type: "ai",
         prompt: "if the user said yes",
       },
     },
     {
-      from: "conversation_1748865765527",
-      to: "conversation_1748865851101",
+      from: "conversation_1748894221281",
+      to: "conversation_1748894253816",
       condition: {
         type: "ai",
         prompt: "role is not empty",
       },
     },
     {
-      from: "conversation_1748865851101",
-      to: "conversation_1748865928260",
+      from: "conversation_1748894253816",
+      to: "conversation_1748894304354",
       condition: {
         type: "ai",
         prompt:
@@ -525,23 +552,23 @@ export const generator = {
       },
     },
     {
-      from: "conversation_1748865928260",
-      to: "conversation_1748866273306",
+      from: "conversation_1748894304354",
+      to: "conversation_1748894349421",
       condition: {
         type: "ai",
         prompt: "level is not empty",
       },
     },
     {
-      from: "conversation_1748866273306",
-      to: "conversation_1748866308253",
+      from: "conversation_1748894349421",
+      to: "conversation_1748894383836",
       condition: {
         type: "ai",
         prompt: "techstack is not empty",
       },
     },
     {
-      from: "conversation_1748866308253",
+      from: "conversation_1748894383836",
       to: "API Request",
       condition: {
         type: "ai",
@@ -550,21 +577,20 @@ export const generator = {
     },
     {
       from: "API Request",
-      to: "conversation_1748866584301",
+      to: "conversation_1748894499497",
       condition: {
         type: "ai",
         prompt: "Check if questions is not empty",
       },
     },
     {
-      from: "conversation_1748866584301",
-      to: "hangup_1748866666324",
+      from: "conversation_1748894499497",
+      to: "hangup_1748894519393",
       condition: {
         type: "ai",
-        prompt: "if the user said thank you",
+        prompt: 'If the user say "thank you" or "good bye"',
       },
     },
   ],
-  globalPrompt:
-    "You are a voice assistant helping with creating new AI interviewers. Your task is to collect data from the user. Remember that this is a voice conversation - do not use any special characters. You need to speak first",
+  globalPrompt: "",
 };

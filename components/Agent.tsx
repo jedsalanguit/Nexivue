@@ -28,9 +28,9 @@ const Agent = ({
   feedbackId,
 }: AgentProps) => {
   const router = useRouter();
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
@@ -72,7 +72,6 @@ const Agent = ({
 
   // const handleCall = async () => {
   //   setCallStatus(CallStatus.CONNECTING);
-
   //   if (type === "generate") {
   //     await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
   //       variableValues: {
@@ -189,7 +188,7 @@ const Agent = ({
 
       <div className="w-full flex justify-center">
         {callStatus != "ACTIVE" ? (
-          <button className="relative btn-call" onClick={handleCall}>
+          <button className="relative btn-call" onClick={() => handleCall()}>
             <span
               className={cn(
                 "absolute animate-ping rounded-full opacity-75",
